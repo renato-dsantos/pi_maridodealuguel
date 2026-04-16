@@ -1,0 +1,6 @@
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;   /* permite quebrar linha se não couber */
+  gap: 12px;         /* controla o espaço entre os itens */
+  align-items: center; /* alinha verticalmente */
+}

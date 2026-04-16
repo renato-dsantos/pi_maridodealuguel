@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #D9D9D9;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #FFFFFF;
+    padding: 10px;
+    
+}
+
+h2 {
+    color: #5070EE;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #FAF3F3;
+}
+
+.checkbox-group {
+ display: flex;
+  flex-wrap: wrap;   
+  gap: 12px;         
+  align-items: center;        
+  
+}
+form {
+    display: block;
+    margin: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 10px 10px 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+  resize: none; 
+  width: 350px;  
+  height: 150px; 
+}
+
+#botaoEnviar{
+    background-color: #5070EE;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#botaoLimpar{
+    background-color: #00DB0F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
