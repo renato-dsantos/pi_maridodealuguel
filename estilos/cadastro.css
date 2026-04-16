@@ -19,6 +19,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+main {
+   background-image: url('../img/fundo.png'); /* Caminho da imagem */
+    background-repeat: no-repeat;       /* Não repete a imagem */
+    background-size: cover;             /* Redimensiona para cobrir tudo */
+    background-position: center;        /* Centraliza a imagem */
+    background-attachment: fixed; 
+}
  
 /* ---------- Header ---------- */
 header {
