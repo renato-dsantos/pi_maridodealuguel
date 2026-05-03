@@ -1,4 +1,4 @@
-const URL_GET = "http://localhost:8080/prestador"; // removido o ; da URL
+const URL_GET = "http://localhost:8080/prestadores"; // removido o ; da URL
 const URL_POST = "http://localhost:8080/servico";  // removido o ; da URL
 
 const clienteId = localStorage.getItem('clienteId');
