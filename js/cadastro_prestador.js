@@ -29,7 +29,7 @@ document.getElementById('formulario').addEventListener('submit', async function(
     };
 
     try {
-        const response = await fetch(`${API_URL}/api/usuarios`, {
+        const response = await fetch(`${API_URL}/prestadores`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

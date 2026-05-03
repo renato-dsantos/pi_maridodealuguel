@@ -26,7 +26,7 @@ document.getElementById('formulario').addEventListener('submit', async function(
     };
 
     try {
-        const response = await fetch(`${API_URL}/api/usuarios`, {
+        const response = await fetch(`${API_URL}/clientes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
