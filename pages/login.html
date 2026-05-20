@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../estilos/login.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">
+            <img src="../img/logo.png" alt="Logo do Site" class="logo">
+        </a>
+    </header>
+
+    <main>
+        <h2>Entrar na sua conta</h2>
+
+        <section class="container" aria-label="Formulário de login">
+            <form id="formLogin">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" minlength="6" required>
+
+                <div class="button-row">
+                    <button id="botaoEntrar" type="submit">Entrar</button>
+                    <button id="botaoVoltar" type="button" onclick="window.location.href='../index.html';">Voltar</button>
+                </div>
+            </form>
+
+            <section class="recovery" aria-label="Recuperação de senha">
+                <button id="toggleRecuperacao" type="button" class="link-btn" aria-expanded="false" aria-controls="painelRecuperacao">
+                    Esqueceu a senha?
+                </button>
+
+                <div id="painelRecuperacao" class="recovery-panel" hidden>
+                    <p>Informe seu e-mail para receber o link de recuperação.</p>
+                    <form id="formRecuperacao">
+                        <label for="emailRecuperacao">E-mail de recuperação</label>
+                        <input type="email" id="emailRecuperacao" name="emailRecuperacao" placeholder="seuemail@exemplo.com" required>
+                        <button id="botaoRecuperar" type="submit">Enviar link de recuperação</button>
+                    </form>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/login.js"></script>
+</body>
+</html>
