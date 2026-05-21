@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Prestador</title>
+    <link rel="stylesheet" href="../estilos/clientes_prestador.css">
+</head>
+<body>
+     <header>
+        <a href="../index.html">
+        <img src="../img/logo.png" alt="Logo do Site" class="logo" >
+        </a>
+
+        <nav>
+                <button onclick="window.location.href='../index.html';">Sair</button> 
+                
+            </nav>
+    </header>
+    <main>
+        <div class="admin-layout">
+        <div class="tab">
+        <button class="tablinks" onclick="openTabs(event, 'clientes')">Dados pessoais</button>
+        <button class="tablinks" onclick="openTabs(event, 'prestador_serviços')">Serviços solicitados</button>
+        </div>
+        
+                 <div id="clientes" class="tabcontent">
+                    <h3>Dados pessoais</h3>  
+                    
+                </div>
+
+         <div id="prestador_serviços" class="tabcontent">
+                    <h3>Serviços solicitados</h3>
+                    
+                    <table id="tabelaPrestador">  
+                                    
+                            <thead>
+                                    <th>Código do prestador</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Serviço</th>
+                                    <th>Excluir</th>  
+                                </thead> 
+                            <tbody>   
+                                                    
+                            </tbody>
+                    </table> 
+        </div>
+
+    
+    </div>    
+    </main>
+    <script src="../js/prestador.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* =============================================
+   Tela Administrador — admin.css
+   Mesmo estilo do projeto Marido de Aluguel
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #d9d9d9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .logo {
+  height: 52px;
+  width: auto;
+}
+
+header nav {
+  display: flex;
+  gap: 12px;
+}
+
+header nav button {
+  padding: 8px 22px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+header nav button:first-child {
+  background-color: #1a73e8;
+  color: #ffffff;
+}
+
+header nav button:last-child {
+  background-color: #22cc44;
+  color: #ffffff;
+}
+
+header nav button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+
+/* =============================================
+   MAIN
+   ============================================= */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px 48px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+main > h2 {
+  color: #1a73e8;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* =============================================
+   TABS — botões à esquerda
+   ============================================= */
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 190px;
+  float: left;
+  margin-right: 24px;
+}
+
+.tablinks {
+  padding: 10px 10px;
+  background-color: #ffffff;
+  color: #1a73e8;
+  border: 2px solid #1a73e8;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tablinks:hover {
+  background-color: #e8f0fe;
+}
+
+.tablinks.active {
+  background-color: #1a73e8;
+  color: #ffffff;
+}
+
+/* =============================================
+   TAB CONTENT
+   ============================================= */
+.tabcontent {
+  display: none;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+  overflow-x: auto;
+  /* ocupa o espaço ao lado dos botões */
+  margin-left: 204px;
+}
+
+.tabcontent.active {
+  display: block;
+}
+
+.tabcontent h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a73e8;
+  margin-bottom: 16px;
+}
+
+/* =============================================
+   TABELA
+   ============================================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+thead th {
+  background-color: #1a73e8;
+  color: #ffffff;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+thead th:first-child {
+  border-radius: 6px 0 0 0;
+}
+
+thead th:last-child {
+  border-radius: 0 6px 0 0;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e8edf5;
+  transition: background-color 0.15s;
+}
+
+tbody tr:hover {
+  background-color: #f0f5ff;
+}
+
+tbody td {
+  padding: 10px 12px;
+  color: #333;
+}
+
+/* Botão Gerenciar dentro da tabela */
+tbody td .btn-gerenciar {
+  padding: 5px 14px;
+  background-color: #22cc44;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+tbody td .btn-gerenciar:hover {
+  opacity: 0.85;
+}
+
+.admin-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 180px;
+  flex-shrink: 0;
+  /* REMOVA o float: left e margin-right */
+}
+
+.tabcontent {
+  flex: 1;
+  margin-left: 0; /* REMOVA o margin-left: 204px */
+}
+
+/* =============================================
+   RESPONSIVO
+   ============================================= */
+@media (max-width: 640px) {
+  .tab {
+    flex-direction: row;
+    float: none;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  .tablinks {
+    flex: 1;
+    text-align: center;
+  }
+
+  .tabcontent {
+    margin-left: 0;
+  }
+
+  thead th,
+  tbody td {
+    padding: 8px 8px;
+  }
+}

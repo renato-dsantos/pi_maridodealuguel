@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de administrador</title>
+    <link rel="stylesheet" href="../estilos/administrador.css">
+</head>
+<body>
+     <header>
+        <a href="../index.html">
+        <img src="../img/logo.png" alt="Logo do Site" class="logo" >
+        </a>
+
+        <nav>
+                <button onclick="window.location.href='../index.html';">Sair</button> 
+                
+            </nav>
+    </header>
+    <main>
+        <h2>Administrador</h2> 
+        <div class="admin-layout">
+        <div class="tab">
+        <button class="tablinks" onclick="openTabs(event, 'clientes')">Clientes</button>
+        <button class="tablinks" onclick="openTabs(event, 'prestador_serviços')">Prestador de serviços</button>
+        </div>
+        
+                 <div id="clientes" class="tabcontent">
+                    <h3>Clientes</h3>  
+                     <table id="tabelaClientes">  
+                                    
+                            <thead>
+                                    <th>Código do cliente</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Cidade</th>
+                                    <th>Estado</th>
+                                    <th>Excluir</th>  
+                            </thead> 
+                        <tbody>   
+                                                    
+                        </tbody>
+                    </table> 
+                </div>
+
+         <div id="prestador_serviços" class="tabcontent">
+                    <h3>Prestador de serviços</h3>
+                    
+                    <table id="tabelaPrestador">  
+                                    
+                            <thead>
+                                    <th>Código do prestador</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Serviço</th>
+                                    <th>Excluir</th>  
+                                </thead> 
+                            <tbody>   
+                                                    
+                            </tbody>
+                    </table> 
+        </div>
+
+    
+    </div>    
+    </main>
+    <script src="../js/administrador.js"></script>
+</body>
+</html>
