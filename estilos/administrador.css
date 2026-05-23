@@ -234,6 +234,19 @@ tbody td .btn-gerenciar:hover {
   margin-left: 0; /* REMOVA o margin-left: 204px */
 }
 
+.btn-excluir {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    background-color: #c0392b;
+}
+
 /* =============================================
    RESPONSIVO
    ============================================= */
