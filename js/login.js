@@ -1,4 +1,46 @@
-const formLogin = document.getElementById('formLogin');
+document.getElementById("formLogin").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+        alert("Preencha o e-mail e a senha!");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:8080/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, senha })
+        });
+
+        const acesso = await response.text();
+
+        if (response.ok) {
+            sessionStorage.setItem("emailLogado", email);
+            
+            if (acesso === "cliente") {
+                window.location.href = "../pages/cliente.html";
+            } else if (acesso === "prestador") {
+                window.location.href = "../pages/prestador.html";
+            } else if (acesso === "administrador") {
+                window.location.href = "../pages/administrador.html";
+            } else {
+                alert("Tipo de acesso desconhecido: " + acesso);
+            }
+        } else {
+            alert("E-mail ou senha incorretos!");
+        }
+
+    } catch (erro) {
+        console.error("Erro ao fazer login:", erro);
+        alert("Erro ao conectar com o servidor.");
+    }
+});
+
+
 const formRecuperacao = document.getElementById('formRecuperacao');
 const toggleRecuperacao = document.getElementById('toggleRecuperacao');
 const painelRecuperacao = document.getElementById('painelRecuperacao');
@@ -16,12 +58,6 @@ if (toggleRecuperacao && painelRecuperacao) {
   });
 }
 
-if (formLogin) {
-  formLogin.addEventListener('submit', (event) => {
-    event.preventDefault();
-    window.location.href = '../index.html';
-  });
-}
 
 if (formRecuperacao) {
   formRecuperacao.addEventListener('submit', (event) => {
@@ -30,3 +66,4 @@ if (formRecuperacao) {
     formRecuperacao.reset();
   });
 }
+

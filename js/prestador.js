@@ -22,11 +22,78 @@ function openTabs(evt, tabsName) {
 
 }
 
-// Quando a página carregar, abre a primeira aba automaticamente
-window.addEventListener("DOMContentLoaded", () => {
-  const firstTab = document.getElementsByClassName("tablinks")[0];
-  if (firstTab) {
-    firstTab.click(); // Simula o clique no primeiro botão
-  }
+
+
+
+
+// Carrega dados do prestador logado
+async function carregarDadosPrestador() {
+    const email = sessionStorage.getItem("emailLogado");
+
+    if (!email) {
+        alert("Sessão expirada, faça login novamente!");
+        window.location.href = "../pages/login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:8080/prestadores/email/${email}`);
+
+        if (!response.ok) throw new Error("Erro ao buscar prestador");
+
+        const prestador = await response.json();
+
+        // Salva o ID para usar no update
+        sessionStorage.setItem("prestadorID", prestador.prestadorId);
+
+        // Preenche o formulário
+        document.getElementById("nome").value      = prestador.nome      ?? "";
+        document.getElementById("email").value     = prestador.email     ?? "";
+        document.getElementById("telefone").value  = prestador.telefone  ?? "";
+        document.getElementById("servicos").value  = prestador.servicos  ?? "";
+        document.getElementById("descricao").value = prestador.descricao ?? "";
+
+    } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
+        alert("Erro ao carregar dados do prestador.");
+    }
+}
+
+// Salvar alterações
+document.getElementById("formDadosPrestador").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const prestadorID = sessionStorage.getItem("prestadorID");
+
+    const dadosAtualizados = {
+        nome:      document.getElementById("nome").value,
+        email:     document.getElementById("email").value,
+        telefone:  document.getElementById("telefone").value,
+        servicos:  document.getElementById("servicos").value,
+        descricao: document.getElementById("descricao").value
+    };
+
+    try {
+        const response = await fetch(`http://localhost:8080/prestadores/${prestadorID}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dadosAtualizados)
+        });
+
+        if (response.ok) {
+            alert("Dados atualizados com sucesso!");
+        } else {
+            alert("Erro ao atualizar dados!");
+        }
+
+    } catch (erro) {
+        console.error("Erro ao salvar:", erro);
+        alert("Erro ao conectar com o servidor.");
+    }
 });
 
+// ✅ DOMContentLoaded no final com delay para garantir que o DOM está pronto
+window.addEventListener("load", () => {
+    document.querySelector(".tablinks").click();
+    carregarDadosPrestador();
+});
