@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marido de Aluguel</title>
+    <link rel="stylesheet" href="../estilos/servico.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">
+            <img src="../img/logo.png" alt="Logo do Site" class="logo">
+        </a>
+        <nav>
+                <div id="nav-buttons">
+                    <!-- preenchido pelo JS -->
+                </div>
+            </nav>
+    </header>
+
+    <main>
+        <h4>Nossos colaboradores</h4>
+
+        <ul class="servicos-grid" id="lista-prestadores">
+            <li class="card loading">Carregando prestadores...</li>
+        </ul>
+    </main>
+
+    <footer>
+        <img id="logo_footer" src="../img/logo.png" alt="Logo marido de aluguel" width="100" height="100">
+        <div class="footer-brand">
+            <h3>MARIDO DE ALUGUEL</h3>
+            <p>Conectamos você aos melhores profissionais da sua região com agilidade e confiança.</p>
+        </div>
+
+        <nav aria-label="Links do rodapé">
+            <h3>Navegação:</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/servicos">Serviços</a></li>
+                <li><a href="./pages/cadastro_escolher.html">Cadastros</a></li>
+            </ul>
+        </nav>
+
+        <address>
+            <h3>CONTATOS:</h3>
+            <p>(11) 99999-9999</p>
+            <p>contato@marido.com</p>
+            <p>São Paulo, SP</p>
+        </address>
+
+        <hr>
+        <p>&copy; 2026 Marido de Aluguel. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        
+    const emailLogado = sessionStorage.getItem('emailLogado');
+    const cliente = JSON.parse(sessionStorage.getItem('cliente'));
+    const navButtons = document.getElementById('nav-buttons');
+
+    if (emailLogado && cliente) {
+        // Cliente logado
+        navButtons.innerHTML = `
+            <button onclick="window.location.href='pages/cliente.html'">${cliente.nome}</button>
+            <button onclick="sessionStorage.clear(); window.location.reload();">Sair</button>
+        `;
+    } else if (emailLogado) {
+        // Prestador logado — só tem email salvo
+        navButtons.innerHTML = `
+            <button onclick="window.location.href='pages/prestador.html'">${emailLogado}</button>
+            <button onclick="sessionStorage.clear(); window.location.reload();">Sair</button>
+        `;
+    } else {
+        // Ninguém logado
+        navButtons.innerHTML = `
+            <button onclick="window.location.href='pages/login.html'">Login</button>
+            <button onclick="window.location.href='pages/cadastro_escolher.html'">Cadastro</button>
+        `;
+    }
+ 
+        async function carregarPrestadores() {
+            const lista = document.getElementById('lista-prestadores');
+
+            try {
+                const response = await fetch('http://localhost:8080/prestadores');
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao buscar prestadores: ${response.status}`);
+                }
+
+                const prestadores = await response.json();
+
+                if (prestadores.length === 0) {
+                    lista.innerHTML = '<li class="card">Nenhum prestador encontrado.</li>';
+                    return;
+                }
+
+                lista.innerHTML = prestadores.map(prestador => `
+                    <li class="card">
+                        <h3>${prestador.nome}</h3>
+                        <p>${prestador.servicos ?? ''}</p>
+                        <p class="descricao">${prestador.descricao ?? ''}</p>
+                        <button onclick="window.location.href='solicitar_servico.html?id=${prestador.prestadorId}'">
+                            Solicitar serviço
+                        </button>
+                    </li>
+                `).join('');
+
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = '<li class="card erro">Erro ao carregar prestadores. Tente novamente mais tarde.</li>';
+            }
+        }
+
+        carregarPrestadores();
+    </script>
+</body>
+</html>

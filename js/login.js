@@ -22,7 +22,11 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
             sessionStorage.setItem("emailLogado", email);
             
             if (acesso === "cliente") {
-                window.location.href = "../pages/cliente.html";
+                const resCliente = await fetch(`http://localhost:8080/clientes/email/${email}`);
+                const cliente = await resCliente.json();
+                sessionStorage.setItem("cliente", JSON.stringify(cliente));
+
+        window.location.href = "../pages/cliente.html";
             } else if (acesso === "prestador") {
                 window.location.href = "../pages/prestador.html";
             } else if (acesso === "administrador") {

@@ -5,14 +5,6 @@ function openTabs(event, tabName) {
     event.currentTarget.classList.add("active");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Abre a primeira aba automaticamente
-    document.querySelector(".tablinks").click(); // 👈 Adicione essa linha
-
-    carregarDadosCliente();
-});
-
-
 // Carrega dados do cliente logado
 async function carregarDadosCliente() {
     const email = sessionStorage.getItem("emailLogado");
@@ -25,15 +17,12 @@ async function carregarDadosCliente() {
 
     try {
         const response = await fetch(`http://localhost:8080/clientes/email/${email}`);
-
         if (!response.ok) throw new Error("Erro ao buscar cliente");
 
         const cliente = await response.json();
 
-        // Salva o ID para usar no update
         sessionStorage.setItem("clienteID", cliente.clienteID);
 
-        // Preenche o formulário
         document.getElementById("nome").value      = cliente.nome      ?? "";
         document.getElementById("email").value     = cliente.email     ?? "";
         document.getElementById("telefone").value  = cliente.telefone  ?? "";
@@ -85,8 +74,63 @@ document.getElementById("formDadosPessoais").addEventListener("submit", async (e
     }
 });
 
-// Inicializar
+// Carregar serviços solicitados
+async function carregarServicos() {
+    const clienteID = sessionStorage.getItem("clienteID");
+    if (!clienteID) return;
+
+    try {
+        const response = await fetch(`http://localhost:8080/servicos/cliente/${clienteID}`);
+        if (!response.ok) throw new Error("Erro ao buscar serviços");
+
+        const servicos = await response.json();
+        const tbody = document.querySelector("#tabelaPrestador tbody");
+
+        if (servicos.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6">Nenhum serviço solicitado.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = servicos.map(s => `
+            <tr>
+                <td>${s.prestador.prestadorId}</td>
+                <td>${s.prestador.nome}</td>
+                <td>${s.prestador.email}</td>
+                <td>${s.prestador.telefone}</td>
+                <td>${s.tipo}</td>
+                <td>${s.data}</td>
+                <td>${s.descricao}</td>
+                <td><button class="btn-recusar" onclick="excluirServico(${s.id})">Excluir</button></td>
+            </tr>
+        `).join('');
+
+    } catch (erro) {
+        console.error("Erro ao carregar serviços:", erro);
+    }
+}
+
+async function excluirServico(id) {
+    if (!confirm("Deseja excluir este serviço?")) return;
+
+    try {
+        const response = await fetch(`http://localhost:8080/servicos/${id}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            alert("Serviço excluído com sucesso!");
+            carregarServicos();
+        } else {
+            alert("Erro ao excluir serviço.");
+        }
+    } catch (erro) {
+        console.error("Erro ao excluir:", erro);
+    }
+}
+
+// DOMContentLoaded — único, no final
 document.addEventListener("DOMContentLoaded", () => {
-    carregarDadosCliente();
+    document.querySelector(".tablinks").click();
+    carregarDadosCliente().then(() => carregarServicos());
 });
 

@@ -1,75 +1,59 @@
-const URL_GET = "http://localhost:8080/prestadores"; // removido o ; da URL
-const URL_POST = "http://localhost:8080/servico";  // removido o ; da URL
+// 1. Proteção de rota
+const emailLogado = sessionStorage.getItem('emailLogado');
+const cliente = JSON.parse(sessionStorage.getItem('cliente'));
 
-const clienteId = localStorage.getItem('clienteId');
-let prestadorId = null; // variável global para guardar o id
+if (!emailLogado || !cliente) {
+    alert('Você precisa estar logado como cliente para solicitar um serviço.');
+    window.location.href = 'login.html';
+}
 
-async function carregarDadosPrestador() {
+// 2. Parâmetro da URL
+const params = new URLSearchParams(window.location.search);
+const prestadorId = params.get('id');
+
+// 3. Carregar dados do prestador
+async function carregarPrestador() {
     try {
-        const response = await fetch(URL_GET);
+        const res = await fetch(`http://localhost:8080/prestadores/${prestadorId}`);
+        const prestador = await res.json();
 
-        if (response.ok) {
-            const prestador = await response.json();
-
-            // Armazena o id para usar no POST depois
-            prestadorId = prestador.id;
-
-            // Preenche os campos do formulário
-            document.getElementById('nome').value = prestador.nome;
-            document.getElementById('email').value = prestador.email;
-            document.getElementById('servico').value = prestador.servico;
-            document.getElementById('descricao').value = prestador.descricao;
-
-            console.log('ID do prestador armazenado:', prestadorId);
-        } else {
-            console.error('Erro ao buscar prestador:', response.status);
-        }
-
-    } catch (error) {
-        console.error('Erro de conexão:', error.message);
+        document.getElementById('nome').value      = prestador.nome;
+        document.getElementById('email').value     = prestador.email;
+        document.getElementById('servico').value   = prestador.servicos;
+        document.getElementById('descricao').value = prestador.descricao;
+    } catch (e) {
+        alert('Erro ao carregar dados do prestador.');
     }
 }
 
-carregarDadosPrestador();
+carregarPrestador();
 
+// 4. Enviar solicitação
+document.getElementById('formulario').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-// post para enviar os dados do serviço solicitado para o backend
-
-
-document.getElementById('formulario').addEventListener('submit', async function(event) {
-    event.preventDefault(); 
-
-    
-   const formularioSolicitacao = {
-        prestadorId : prestadorId,
-        nome: document.getElementById('nome').value,
-        email: document.getElementById('email').value,            
-        // Dados do serviço a ser solicitado
-        clienteId: clienteId, // Inclui o ID do prestador           
-        tipo_servico: document.getElementById('tipo_servico').value,        
-        data_servico: document.getElementById('data_servico').value,        
-        descricao_servico: document.getElementById('descricao_servico').value,       
+    const body = {
+        tipo:        document.getElementById('tipo_servico').value,
+        data:        document.getElementById('data_servico').value,
+        descricao:   document.getElementById('descricao_servico').value,
+        prestadorId: prestadorId,
+        clienteId: cliente.clienteID
     };
 
     try {
-        const response = await fetch(`${URL_POST}/api/servicos`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formularioSolicitacao)
+        const res = await fetch('http://localhost:8080/servicos', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(body)
         });
 
-        if (response.ok) {
-            alert('Solicitação realizada com sucesso!');
-            window.location.href = '../index.html'; // Redireciona após sucesso
+        if (res.ok) {
+            alert('Serviço solicitado com sucesso!');
+            window.location.href = 'cliente.html';
         } else {
-            const erro = await response.json();
-            alert('Erro: ' + (erro.message || 'Falha ao enviar os dados.'));
+            alert('Erro ao solicitar serviço. Tente novamente.');
         }
-
-    } catch (error) {
-        alert('Erro de conexão com o servidor: ' + error.message);
+    } catch (e) {
+        alert('Erro de conexão com o servidor.');
     }
 });
- 
